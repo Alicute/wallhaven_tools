@@ -2,14 +2,25 @@ import os
 import requests
 import time
 import math
+from config_demo import ConfigSingleton
 
+"""
+这个程序的主要功能为：获取用户的收藏夹，然后遍历该收藏夹所有的图片，并将图片的地址全部保存到本地
+在此期间，会根据该用户有多少个收藏夹创建对应的文件夹，格式为：User-timestamp-collection-url.txt
+当该用户的所有收藏夹的所有图片均被保存到本地后，会修改User-timestamp的时间戳文件夹，在后面加后缀——finished
+表示拉取完成
+
+"""
+
+config = ConfigSingleton()
+api_key = config.get_config("User","api_key")
 init_path = []
 
 
 def mkdir_init():
     """通过一个全局变量列表来装父路径，保证程序运行时只有一个时间戳路径，多次运行时存在多个时间戳路径"""
     dir_path = os.path.dirname(os.path.abspath(__file__))
-    parent_dir_path = os.path.join(dir_path, "Favorites")
+    parent_dir_path = os.path.join(dir_path, "../Favorites")
     time_str = time.strftime("%Y%m%d_%H%M%S", time.localtime())
     new_dir_path = os.path.join(parent_dir_path, user, time_str)
     init_path.append(new_dir_path)
@@ -71,9 +82,8 @@ def get_collection_id(collection_info):
 
 
 if __name__ == '__main__':
-    """配置自己的私钥和想要查询的用户的名字"""
-    api_key = "mprbYShCTmcuUxIpUV2hpDhU3PvCbYiC"
-    user = "yanll123"
+    """想要查询的用户的名字"""
+    user = input("请输入你想要查询的用户： \n")
     """初始化父路径"""
     mkdir_init()
     """抓取收藏夹图片的路径"""

@@ -17,7 +17,8 @@ def mkdir_init():
     """通过一个全局变量列表来装父路径，保证程序运行时只有一个时间戳路径，多次运行时存在多个时间戳路径"""
     file_path = os.path.abspath(__file__)
     dir_path = os.path.dirname(file_path)
-    parent_dir_path = os.path.join(dir_path, "Condition_Result")
+    print(dir_path)
+    parent_dir_path = os.path.join(dir_path, "../Condition_Result")
     time_str = time.strftime("%Y%m%d_%H%M%S", time.localtime())
     new_dir_path = os.path.join(parent_dir_path, time_str)
     os.makedirs(new_dir_path)

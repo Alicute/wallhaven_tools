@@ -2,14 +2,20 @@
 import math
 import os
 import time
-
 import requests
-
 # 基础信息
-api_key = "mprbYShCTmcuUxIpUV2hpDhU3PvCbYiC"
-user = "11tangsong"
+from config_demo import ConfigSingleton
 
+config = ConfigSingleton()
+api_key = config.get_config("User","api_key")
 
+"""
+这个程序的主要功能为：获取用户的收藏夹，然后遍历该收藏夹所有的图片，并将图片的地址全部保存到本地
+在此期间，会根据该用户有多少个收藏夹创建对应的文件夹，格式为：User-timestamp-collection-url.txt
+当该用户的所有收藏夹的所有图片均被保存到本地后，会修改User-timestamp的时间戳文件夹，在后面加后缀——finished
+表示拉取完成
+
+"""
 
 
 # 获取用户的公开收藏夹，存储收藏夹的名字、id、id下图片分页数量
@@ -63,5 +69,6 @@ def get_collection_id(collection_info):
 
 
 if __name__ == '__main__':
-    collection_info = get_collection("11tangsong", api_key)
+    user = input("请输入你想要查询的用户： \n")
+    collection_info = get_collection(user, api_key)
     get_collection_id(collection_info)
