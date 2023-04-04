@@ -5,9 +5,9 @@ import math
 from config_demo import ConfigSingleton
 
 """
-这个程序的主要功能为：获取用户的收藏夹，然后遍历该收藏夹所有的图片，并将图片的地址全部保存到本地
+主要功能：获取用户的收藏夹，然后遍历该收藏夹所有的图片，并将图片的地址全部保存到本地
 在此期间，会根据该用户有多少个收藏夹创建对应的文件夹，格式为：User-timestamp-collection-url.txt
-当该用户的所有收藏夹的所有图片均被保存到本地后，会修改User-timestamp的时间戳文件夹，在后面加后缀——finished
+当该用户的所有收藏夹的所有图片均被保存到本地后，会修改User-timestamp的时间戳文件夹，在后面加后缀：_finished
 表示拉取完成
 
 """
