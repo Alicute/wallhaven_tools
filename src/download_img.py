@@ -15,7 +15,6 @@ def mkdir_init():
     parent_dir_path = os.path.join(dir_path, "../Download_img")
     time_str = time.strftime("%Y%m%d_%H%M%S", time.localtime())
     new_dir_path = os.path.join(parent_dir_path, time_str)
-    print(new_dir_path)
     os.makedirs(new_dir_path)
     init_path.append(new_dir_path)
 # 图片的 URL
