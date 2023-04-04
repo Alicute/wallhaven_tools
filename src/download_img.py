@@ -19,7 +19,15 @@ def mkdir_init():
     init_path.append(new_dir_path)
 # 图片的 URL
 def get_url():
-    urlpath = input("请输入想要下载的url文本地址：")
+    dir_path = os.path.dirname(os.path.abspath(__file__))  # 获取当前文件所在目录的绝对路径
+    parent_dir_path = os.path.join(dir_path, "..")  # 获取当前文件所在目录的上级目录的绝对路径
+    favorites_dir_path = os.path.join(parent_dir_path, "Favorites")  # 获取Favorites目录的绝对路径
+    for root, dirs, files in os.walk(favorites_dir_path):
+        for file in files:
+            if file.endswith(".txt"):
+                txt_path = os.path.join(root, file)
+                print(txt_path)
+    urlpath = input("请复制上述地址然后粘贴到下面进行下载：")
     with open(urlpath, "r") as f:
         lines = f.readlines()
     with concurrent.futures.ThreadPoolExecutor() as executor:
