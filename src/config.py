@@ -16,3 +16,6 @@ class ConfigSingleton:
 
     def api_key(self):
         return self.config.get("User", "api_key")
+
+    def get_token(self):
+        return self.config.get("User","token")
