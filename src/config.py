@@ -19,3 +19,6 @@ class ConfigSingleton:
 
     def get_token(self):
         return self.config.get("User","token")
+
+    def get_cookies(self):
+        return self.config.get("User","cookies")

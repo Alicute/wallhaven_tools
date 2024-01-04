@@ -12,7 +12,9 @@ import config
 # coll和token需要手动去创建一个collection，然后随意添加一个图片到该collection，查看post请求的参数
 coll = 1664329
 token = config.ConfigSingleton().get_token()
-
+init_cookies = config.ConfigSingleton().get_cookies()
+key_value_pairs = init_cookies.split(";")
+cookies = {pair.split("=")[0]: pair.split("=")[1] for pair in key_value_pairs}
 proxies = {
     "http": "127.0.0.1:7890",
     "https": "127.0.0.1:7890",
@@ -41,8 +43,7 @@ def add_pic_to_like():
         id = url.split("/")[-1].split(".")[0].replace("wallhaven-", "")
         add_url = f"https://wallhaven.cc/favorites/add?wallHashid={id}&collectionId={coll}&_token={token}"
         try:
-            res = requests.request(method="POST", url=add_url, proxies=proxies)
-            print(res.text)
+            res = requests.request(method="POST", url=add_url, proxies=proxies,cookies=cookies)
             print(f"已完成{i + 1}/{num}>>>>>>{add_url}>>>>>>{res.status_code}")
             time.sleep(2) #太快了会导致链接错误
         except Exception as e:
