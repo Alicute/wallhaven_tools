@@ -14,7 +14,7 @@ all_image_paths = []  # 创建空列表存储所有图片路径
 init_path = []
 # 获取api_key
 api_key = myconfig.ConfigSingleton().api_key()
-cookies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_cookies())
+cookies = myconfig.ConfigSingleton().get_live_cookie()[0]
 proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
 level = myconfig.ConfigSingleton().set_level()
 print(level)
