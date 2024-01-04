@@ -41,7 +41,7 @@ def cond_file_dir(cond_name):
 
 
 def send_req(stars=100):  # 三个1分别代表了SFW、Sketchy、NSFW，如001将会查找不宜展示的图片
-    for num in range(100):
+    for num in range(20):
         # time.sleep(3)
         resolutions = [
             "640x480", "800x600", "1024x768", "1152x864", "1280x720", "1280x768",
@@ -49,33 +49,43 @@ def send_req(stars=100):  # 三个1分别代表了SFW、Sketchy、NSFW，如001�
             "1440x900", "1600x900", "1600x1200", "1680x1050", "1920x1080", "1920x1200",
             "2048x1152", "2560x1080", "2560x1440", "3440x1440", "3840x2160"
         ]
+        only_good_resolutions = [
+            "1920x1080", "1920x1200",
+            "2048x1152", "2560x1080", "2560x1440", "3440x1440", "3840x2160"
+        ]
         ratios = [
             "1x1", "4x3", "5x4", "16x9", "16x10", "21x9", "32x9", "32x10", "48x9", "48x10"
+        ]
+        only_use_ratios = [
+             "16x9", "16x10", "21x9",  "9x16","9x18", "10x16"
         ]
         """
         默认请求链接是100收藏数以上、等级自己设定，分辨率和屏幕比例是随机的
         """
-        url = f"https://wallhaven.cc/api/v1/search?favorites={stars}&purity={level}&atleast={random.choice(resolutions)}&ratios={random.choice(ratios)}&page={num + 1}&apikey={api_key}"
+        url = f"https://wallhaven.cc/api/v1/search?favorites={stars}&purity={level}&atleast={random.choice(only_good_resolutions)}&ratios={random.choice(only_use_ratios)}&page={num + 1}&apikey={api_key} "
         # "https://wallhaven.cc/search?categories=111&purity=100&ratios=9x16&sorting=favorites&order=desc&page=2"
+        # 其他参数：&topRange=1y&sorting=toplist&order=desc&ai_art_filter=1
         pattern = r"search\?(.*)\&page"
         # 匹配搜索条件并以此作为创建文本文件的名字
         match = re.search(pattern, url)
         file_path = cond_file_dir(match.group(1))
         print(url)
-
-        response = requests.request(method="GET", url=url, proxies=proxies, cookies=cookies)
-        data = json.loads(response.content)
-        print(f"{(num + 1)}/{math.ceil(data['meta']['total'] / 24) + 1}")
-        if not data['data']:
-            print(f"第 {num + 1} 页没有数据，程序已停止。")
-            break
-        # 提取 data[path] 字段
-        image_paths = [item['path'] for item in data['data']]
-        # 写入大列表
-        all_image_paths.extend(image_paths)
-        with open(file_path, 'a+') as f:
-            for path in image_paths:
-                f.write(path + '\n')
+        try:
+            response = requests.request(method="GET", url=url, proxies=proxies, cookies=cookies)
+            data = json.loads(response.content)
+            print(f"{(num + 1)}/{math.ceil(data['meta']['total'] / 24) + 1}")
+            if not data['data']:
+                print(f"第 {num + 1} 页没有数据，程序已停止。")
+                continue
+            # 提取 data[path] 字段
+            image_paths = [item['path'] for item in data['data']]
+            # 写入大列表
+            all_image_paths.extend(image_paths)
+            with open(file_path, 'a+') as f:
+                for path in image_paths:
+                    f.write(path + '\n')
+        except Exception as e:
+            print(e)
 
 
 if __name__ == '__main__':
