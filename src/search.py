@@ -53,7 +53,7 @@ def send_req(stars=100):  # 三个1分别代表了SFW、Sketchy、NSFW，如001�
             "1x1", "4x3", "5x4", "16x9", "16x10", "21x9", "32x9", "32x10", "48x9", "48x10"
         ]
         """
-        默认请求链接是100收藏数以上、等级为NSFW，分辨率和屏幕比例是随机的
+        默认请求链接是100收藏数以上、等级自己设定，分辨率和屏幕比例是随机的
         """
         url = f"https://wallhaven.cc/api/v1/search?favorites={stars}&purity={level}&atleast={random.choice(resolutions)}&ratios={random.choice(ratios)}&page={num + 1}&apikey={api_key}"
         # "https://wallhaven.cc/search?categories=111&purity=100&ratios=9x16&sorting=favorites&order=desc&page=2"
