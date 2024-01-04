@@ -40,6 +40,7 @@ def get_url():
     urlpath = input("请复制上述你准备下载的地址然后粘贴到下面进行下载:\n>>>>>>>>>>【Favorites】OR【Condition】OR【Merged】>>>>>>>>>>>\n")
     with open(urlpath, "r") as f:
         lines = f.readlines()
+    print(len(lines))
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = []
         for url in map(str.strip, lines):
