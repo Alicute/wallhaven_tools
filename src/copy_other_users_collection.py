@@ -2,8 +2,7 @@ import os
 import requests
 import time
 import math
-from myconfig import ConfigSingleton
-
+import myconfig
 """
 主要功能：获取用户的收藏夹，然后遍历该收藏夹所有的图片，并将图片的地址全部保存到本地
 在此期间，会根据该用户有多少个收藏夹创建对应的文件夹，格式为：User-timestamp-collection-url.txt
@@ -12,10 +11,9 @@ from myconfig import ConfigSingleton
 
 """
 
-config = ConfigSingleton()
-api_key = config.api_key()
-cookies = config.con_str_to_dict(config.ConfigSingleton().get_cookies())
-proxies = config.con_str_to_dict(config.ConfigSingleton().get_proxy())
+api_key = myconfig.ConfigSingleton().api_key()
+cookies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_cookies())
+proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
 init_path = []
 
 

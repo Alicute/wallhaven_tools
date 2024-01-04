@@ -7,17 +7,16 @@ import time
 
 import requests
 import json
-from myconfig import ConfigSingleton
 from src import myconfig
 
 all_image_paths = []  # 创建空列表存储所有图片路径
 # 构造请求 URL
 init_path = []
 # 获取api_key
-api_key = ConfigSingleton().api_key()
+api_key = myconfig.ConfigSingleton().api_key()
 cookies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_cookies())
 proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
-level = ConfigSingleton().set_level()
+level = myconfig.ConfigSingleton().set_level()
 print(level)
 
 
