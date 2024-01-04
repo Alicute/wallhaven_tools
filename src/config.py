@@ -22,3 +22,6 @@ class ConfigSingleton:
 
     def get_cookies(self):
         return self.config.get("User","cookies")
+
+    def get_coll(self):
+        return self.config.get("User","coll")

@@ -10,7 +10,7 @@ import config
 """
 
 # coll和token需要手动去创建一个collection，然后随意添加一个图片到该collection，查看post请求的参数
-coll = 1664329
+coll = config.ConfigSingleton().get_coll()
 token = config.ConfigSingleton().get_token()
 init_cookies = config.ConfigSingleton().get_cookies()
 key_value_pairs = init_cookies.split(";")
