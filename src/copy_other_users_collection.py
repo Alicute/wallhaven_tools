@@ -2,20 +2,23 @@ import os
 import requests
 import time
 import math
-from config_demo import ConfigSingleton
+from config import ConfigSingleton
 
 """
 主要功能：获取用户的收藏夹，然后遍历该收藏夹所有的图片，并将图片的地址全部保存到本地
 在此期间，会根据该用户有多少个收藏夹创建对应的文件夹，格式为：User-timestamp-collection-url.txt
 当该用户的所有收藏夹的所有图片均被保存到本地后，会修改User-timestamp的时间戳文件夹，在后面加后缀：_finished
-表示拉取完成
+表示拉取完成，仅供喜欢将云图全部放到本地来的
 
 """
 
 config = ConfigSingleton()
 api_key = config.get_config("User","api_key")
 init_path = []
-
+proxies = {
+    "http": "127.0.0.1:7890",
+    "https": "127.0.0.1:7890",
+}
 
 def mkdir_init():
     """通过一个全局变量列表来装父路径，保证程序运行时只有一个时间戳路径，多次运行时存在多个时间戳路径"""
@@ -38,7 +41,7 @@ def get_collection(user, api_key):
     url = f"https://wallhaven.cc/api/v1/collections/{user}?apikey={api_key}"
     print(url)
     try:
-        response = requests.get(url)
+        response = requests.get(url,proxies=proxies)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
@@ -66,7 +69,7 @@ def get_collection_id(collection_info):
                 time.sleep(3)
                 print(url)
                 try:
-                    response = requests.get(url)
+                    response = requests.get(url,proxies=proxies)
                     response.raise_for_status()
                 except requests.exceptions.RequestException as e:
                     print(f"Error: {e}")
