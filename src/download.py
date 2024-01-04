@@ -5,12 +5,12 @@ import time
 
 import requests
 from tqdm import tqdm
-
+from get_url import get_dir_path
 init_path = []
 
 
 def mkdir_init():
-    """通过一个全局变量列表来装父路径，保证程序运行时只有一个时间戳路径，多次运行时存在多个时间戳路径"""
+    """通过一个全局变量列表来装父路径，保证程序运行时只有一个时间戳路径，多次运行时存在多个时间戳路径，所以每次运行本文件均会创建一个文件夹"""
     file_path = os.path.abspath(__file__)
     dir_path = os.path.dirname(file_path)
     parent_dir_path = os.path.join(dir_path, "../Download_img")
@@ -22,15 +22,16 @@ def mkdir_init():
 
 # 图片的 URL
 def get_url():
-    dir_path = os.path.dirname(os.path.abspath(__file__))  # 获取当前文件所在目录的绝对路径
-    parent_dir_path = os.path.join(dir_path, "..")  # 获取当前文件所在目录的上级目录的绝对路径
-    favorites_dir_path = os.path.join(parent_dir_path, "Favorites")  # 获取Favorites目录的绝对路径
-    for root, dirs, files in os.walk(favorites_dir_path):
-        for file in files:
-            if file.endswith(".txt"):
-                txt_path = os.path.join(root, file)
-                print(txt_path)
-    urlpath = input("请复制上述地址然后粘贴到下面进行下载：")
+    # dir_path = os.path.dirname(os.path.abspath(__file__))  # 获取当前文件所在目录的绝对路径
+    # parent_dir_path = os.path.join(dir_path, "..")  # 获取当前文件所在目录的上级目录的绝对路径
+    # favorites_dir_path = os.path.join(parent_dir_path, "Favorites")  # 获取Favorites目录的绝对路径
+    # for root, dirs, files in os.walk(favorites_dir_path):
+    #     for file in files:
+    #         if file.endswith(".txt"):
+    #             txt_path = os.path.join(root, file)
+    #             print(txt_path)
+    print("\n".join(get_dir_path()))
+    urlpath = input("请复制上述你准备下载的地址然后粘贴到下面进行下载\n>>>>>【Favorites】OR【Condition】>>>>>>\n")
     with open(urlpath, "r") as f:
         lines = f.readlines()
     with concurrent.futures.ThreadPoolExecutor() as executor:
