@@ -16,5 +16,5 @@
 
 7、下载图片时忽略报错
 
-8、注意在每个reques添加了proxy
+8、注意在每个request添加了proxy
 
