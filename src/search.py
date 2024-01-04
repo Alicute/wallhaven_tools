@@ -7,13 +7,19 @@ import time
 
 import requests
 import json
-from config import ConfigSingleton
+from myconfig import ConfigSingleton
+from src import myconfig
 
 all_image_paths = []  # 创建空列表存储所有图片路径
 # 构造请求 URL
 init_path = []
 # 获取api_key
 api_key = ConfigSingleton().api_key()
+cookies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_cookies())
+proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
+level = ConfigSingleton().set_level()
+print(level)
+
 
 def mkdir_init():
     """通过一个全局变量列表来装父路径，保证程序运行时只有一个时间戳路径，多次运行时存在多个时间戳路径"""
@@ -34,7 +40,7 @@ def cond_file_dir(cond_name):
     return cond_file_path
 
 
-def send_req(stars=100,level="001"):
+def send_req(stars=100):  # 三个1分别代表了SFW、Sketchy、NSFW，如001将会查找不宜展示的图片
     for num in range(100):
         # time.sleep(3)
         resolutions = [
@@ -56,11 +62,8 @@ def send_req(stars=100,level="001"):
         match = re.search(pattern, url)
         file_path = cond_file_dir(match.group(1))
         print(url)
-        proxies = {
-            "http": "127.0.0.1:7890",
-            "https": "127.0.0.1:7890",
-        }
-        response = requests.request(method="GET",url=url,proxies=proxies)
+
+        response = requests.request(method="GET", url=url, proxies=proxies, cookies=cookies)
         data = json.loads(response.content)
         print(f"{(num + 1)}/{math.ceil(data['meta']['total'] / 24) + 1}")
         if not data['data']:

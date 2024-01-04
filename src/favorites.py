@@ -3,23 +3,17 @@ import os
 import time
 from get_url import get_dir_path
 import requests
-import config
+import myconfig
 
 """
 此文件是作为将收集到的url添加到自己的收藏中去,这里有点问题，发送的POST状态成功了，但是操作没成功，此处需要重新编写逻辑
 """
 
 # coll和token需要手动去创建一个collection，然后随意添加一个图片到该collection，查看post请求的参数
-coll = config.ConfigSingleton().get_coll()
-token = config.ConfigSingleton().get_token()
-init_cookies = config.ConfigSingleton().get_cookies()
-key_value_pairs = init_cookies.split(";")
-cookies = {pair.split("=")[0]: pair.split("=")[1] for pair in key_value_pairs}
-proxies = {
-    "http": "127.0.0.1:7890",
-    "https": "127.0.0.1:7890",
-}
-
+coll = myconfig.ConfigSingleton().get_coll()
+token = myconfig.ConfigSingleton().get_token()
+cookies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_cookies())
+proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
 """
 获取喜欢的文件夹内的txt文件内存储的url
 """

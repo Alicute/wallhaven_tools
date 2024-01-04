@@ -6,8 +6,11 @@ import time
 import requests
 from tqdm import tqdm
 from get_url import get_dir_path
-init_path = []
+from src import myconfig
 
+init_path = []
+cookies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_cookies())
+proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
 
 def mkdir_init():
     """通过一个全局变量列表来装父路径，保证程序运行时只有一个时间戳路径，多次运行时存在多个时间戳路径，所以每次运行本文件均会创建一个文件夹"""
@@ -47,11 +50,7 @@ def get_url():
 
 def download_img(url):
     # 下载图片并保存到本地文件
-    proxies = {
-        "http": "127.0.0.1:7890",
-        "https": "127.0.0.1:7890",
-    }
-    response = requests.request(method="GET", url=url,stream=True, proxies=proxies)
+    response = requests.request(method="GET", url=url,stream=True, proxies=proxies,cookies=cookies)
     response.raise_for_status()  # 检查请求是否成功
     id = url.split("/")[-1].split(".")[0].replace("wallhaven-", "")
     type = url.split("/")[-1].split(".")[1]

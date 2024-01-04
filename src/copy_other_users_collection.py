@@ -2,7 +2,7 @@ import os
 import requests
 import time
 import math
-from config import ConfigSingleton
+from myconfig import ConfigSingleton
 
 """
 主要功能：获取用户的收藏夹，然后遍历该收藏夹所有的图片，并将图片的地址全部保存到本地
@@ -13,12 +13,11 @@ from config import ConfigSingleton
 """
 
 config = ConfigSingleton()
-api_key = config.get_config("User","api_key")
+api_key = config.api_key()
+cookies = config.con_str_to_dict(config.ConfigSingleton().get_cookies())
+proxies = config.con_str_to_dict(config.ConfigSingleton().get_proxy())
 init_path = []
-proxies = {
-    "http": "127.0.0.1:7890",
-    "https": "127.0.0.1:7890",
-}
+
 
 def mkdir_init():
     """通过一个全局变量列表来装父路径，保证程序运行时只有一个时间戳路径，多次运行时存在多个时间戳路径"""

@@ -1,6 +1,12 @@
 import configparser
 
 
+def con_str_to_dict(con_str):
+    key_value_pairs = con_str.split(";")
+    goal_dict = {pair.split("=")[0]: pair.split("=")[1] for pair in key_value_pairs}
+    return goal_dict
+
+
 class ConfigSingleton:
     __instance = None
 
@@ -25,3 +31,10 @@ class ConfigSingleton:
 
     def get_coll(self):
         return self.config.get("User","coll")
+
+    def get_proxy(self):
+        return self.config.get("User","proxy")
+
+    def set_level(self):
+        return self.config.get("User","level")
+
