@@ -1,7 +1,9 @@
 import os
 import shutil
 
-
+"""
+将下载的所有图片转移到一个文件夹内去，方便操作
+"""
 def get_download_path():
     dir_path = os.path.dirname(os.path.abspath(__file__))  # 获取当前文件所在目录的绝对路径
     parent_dir_path = os.path.join(dir_path, "..")  # 获取当前文件所在目录的上级目录的绝对路径
