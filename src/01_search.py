@@ -39,7 +39,8 @@ def cond_file_dir(cond_name):
 
 
 def send_req(stars=100):  # 三个1分别代表了SFW、Sketchy、NSFW，如001将会查找不宜展示的图片
-    for num in range(20):
+    times = input("请输入你想收集多少次[1~200]随机图片的url:")
+    for num in range(int(times)):
         # time.sleep(3)
         resolutions = [
             "640x480", "800x600", "1024x768", "1152x864", "1280x720", "1280x768",
@@ -72,7 +73,7 @@ def send_req(stars=100):  # 三个1分别代表了SFW、Sketchy、NSFW，如001�
             data = json.loads(response.content)
             print(f"{(num + 1)}/{math.ceil(data['meta']['total'] / 24) + 1}")
             if not data['data']:
-                print(f"第 {num + 1} 页没有数据，程序已停止。")
+                print(f"第 {num + 1} 次请求页没有数据，跳过。")
                 continue
             # 提取 data[path] 字段
             image_paths = [item['path'] for item in data['data']]
