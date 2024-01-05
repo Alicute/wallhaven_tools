@@ -23,7 +23,7 @@ def get_dir_path():
 
 
 def create_merge_txt(arr):
-    target_file = 'merged.txt'
+    target_file = '../merged.txt'
     with open(target_file, 'w', encoding='utf-8') as f:
         for file_path in arr:
             with open(file_path, 'r', encoding='utf-8') as file:

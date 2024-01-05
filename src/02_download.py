@@ -54,7 +54,7 @@ def get_url():
 
 def download_img(url):
     # 下载图片并保存到本地文件
-    response = requests.request(method="GET", url=url, stream=True, proxies=proxies, cookies=cookies)
+    response = requests.request(method="GET", url=url, stream=True, proxies=proxies)
     response.raise_for_status()  # 检查请求是否成功
     id = url.split("/")[-1].split(".")[0].replace("wallhaven-", "")
     type = url.split("/")[-1].split(".")[1]
