@@ -60,7 +60,7 @@ def download_img(url):
     type = url.split("/")[-1].split(".")[1]
     cond_file_path = os.path.join(init_path[0], f"{id}.{type}")
     with open(cond_file_path, 'wb') as f:
-        for chunk in response.iter_content(chunk_size=8192):
+        for chunk in response.iter_content(chunk_size=10240):
             f.write(chunk)
 
 
