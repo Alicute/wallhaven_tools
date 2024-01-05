@@ -2,6 +2,7 @@
 功能：实现从wallhaven网站将别人的收藏夹的美图、自己搜索的，一键增加到自己的收藏夹、图片搜索、下载等、
 
 使用说明：
+
 0、请先修改config.test.ini文件，配置好自己的各种隐私数据
 
 1、直接去https://wallhaven.cc/settings/account 生成一个API
