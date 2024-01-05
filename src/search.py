@@ -14,7 +14,6 @@ all_image_paths = []  # 创建空列表存储所有图片路径
 init_path = []
 # 获取api_key
 api_key = myconfig.ConfigSingleton().api_key()
-cookies = myconfig.ConfigSingleton().get_live_cookie()[0]
 proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
 level = myconfig.ConfigSingleton().set_level()
 print(level)
@@ -70,7 +69,7 @@ def send_req(stars=100):  # 三个1分别代表了SFW、Sketchy、NSFW，如001�
         file_path = cond_file_dir(match.group(1))
         print(url)
         try:
-            response = requests.request(method="GET", url=url, proxies=proxies, cookies=cookies)
+            response = requests.request(method="GET", url=url, proxies=proxies )
             data = json.loads(response.content)
             print(f"{(num + 1)}/{math.ceil(data['meta']['total'] / 24) + 1}")
             if not data['data']:

@@ -9,7 +9,7 @@ from get_url import get_dir_path,create_merge_txt
 from src import myconfig
 
 init_path = []
-cookies = myconfig.ConfigSingleton().get_live_cookie()[0]
+_,cookies = myconfig.ConfigSingleton().get_mysession()
 proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
 
 

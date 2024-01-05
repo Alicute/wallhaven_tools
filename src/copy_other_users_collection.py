@@ -12,7 +12,7 @@ import myconfig
 """
 
 api_key = myconfig.ConfigSingleton().api_key()
-cookies = myconfig.ConfigSingleton().get_live_cookie()[0]
+_,cookies = myconfig.ConfigSingleton().get_mysession()
 proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
 init_path = []
 

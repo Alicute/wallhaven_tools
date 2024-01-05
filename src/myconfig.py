@@ -1,4 +1,5 @@
 import configparser
+import time
 
 import bs4 as bs4
 import requests
@@ -44,28 +45,22 @@ class ConfigSingleton:
     def get_user(self):
         return self.config.get("User", "user")
 
-    def get_live_cookie(self):
-        res_arr = []
-        res = requests.request('GET', url=self.config.get("User", "token_url"),
-                               proxies=con_str_to_dict(self.config.get("User", "proxy")))
-        soup = bs4.BeautifulSoup(res.text, 'html.parser')
-        token_input = soup.find('input', {'name': '_token'})
-        token_value = token_input['value']
-        res_login = requests.request('POST', url=self.config.get("User", "login_url"),
-                                     data=con_str_to_dict(self.config.get("User", "user"))
-                                     , proxies=con_str_to_dict(self.config.get("User", "proxy")))
-        res_arr.append(res_login.cookies)
-        res_arr.append(token_value)
-        return res_arr
+    def get_copy_token(self):
+        return self.config.get("User", "copy_token")
+
+    def get_copy_cookies(self):
+        return self.config.get("User", "copy_cookies")
+
+    def get_mysession(self):
+        mysession = requests.Session()
+        res_login = mysession.post(url=self.config.get("User", "login_url"),
+                                   data=con_str_to_dict(self.config.get("User", "user"))
+                                   , proxies=con_str_to_dict(self.config.get("User", "proxy")))
+        soup = bs4.BeautifulSoup(res_login.text, 'html.parser')
+        token_input = soup.find('meta', {'name': 'csrf-token'})
+        token_value = token_input['content']
+        return token_value, mysession
 
 
 if __name__ == '__main__':
-    con = ConfigSingleton()
-    cookies = con.get_live_cookie()[0]
-    token = con.get_live_cookie()[1]
-    print(cookies)
-    print(token)
-    url = f"https://wallhaven.cc/favorites/add?wallHashid=qz5r6q&collectionId=1664450&_token={token}"
-    print(url)
-    res = requests.request('POST', url=url, cookies=cookies, proxies=con_str_to_dict(con.config.get("User", "proxy")))
-    print(res.status_code)
+    pass
