@@ -51,6 +51,8 @@ class ConfigSingleton:
     def get_copy_cookies(self):
         return self.config.get("User", "copy_cookies")
 
+
+    # 获取用户登录信息的session，但是在这个网页传递视乎存在问题，不清楚具体的验证规则，所以这个session无效
     def get_mysession(self):
         mysession = requests.Session()
         res_login = mysession.post(url=self.config.get("User", "login_url"),
@@ -59,8 +61,19 @@ class ConfigSingleton:
         soup = bs4.BeautifulSoup(res_login.text, 'html.parser')
         token_input = soup.find('meta', {'name': 'csrf-token'})
         token_value = token_input['content']
-        return token_value, mysession
+        # return token_value, mysession
+        return mysession,token_value
 
 
 if __name__ == '__main__':
     pass
+    # headers = {"user-agent":"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"}
+    # mysession_new,t = ConfigSingleton().get_mysession()
+    # url = 'https://wallhaven.cc/favorites/add?wallHashid=exrqrr&collectionId=670878&_token={}'.format(t)
+    #
+    # res = mysession_new.post(url = url,headers = headers,proxies = con_str_to_dict(ConfigSingleton().config.get("User", "proxy")))
+    # print(mysession_new.cookies,'\n',mysession_new.headers)
+    # print(url)
+    # print(t)
+    # print(res.text)
+

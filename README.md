@@ -3,11 +3,11 @@
 
 使用说明：
 
-0、请先修改config.test.ini文件，配置好自己的各种隐私数据
+0、请先修改config.test.ini文件，配置好自己的各种隐私数据,然后手动将config.test.ini改成config.ini即可
 
 1、直接去https://wallhaven.cc/settings/account 生成一个API
 
-2、然后放到config.ini即可，手动将config.test.ini改成config.ini即可
+2、修改对应的字段的值
 
 3、把token和cookie放到config.ini文件中去
 

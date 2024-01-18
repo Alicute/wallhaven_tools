@@ -17,7 +17,7 @@ proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
 init_path = []
 
 
-def mkdir_init():
+def fav_mkdir_init():
     """通过一个全局变量列表来装父路径，保证程序运行时只有一个时间戳路径，多次运行时存在多个时间戳路径"""
     dir_path = os.path.dirname(os.path.abspath(__file__))
     parent_dir_path = os.path.join(dir_path, "../Favorites")
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     """想要查询的用户的名字"""
     user = input("请输入你想要查询的用户： \n")
     """初始化父路径"""
-    mkdir_init()
+    fav_mkdir_init()
     """抓取收藏夹图片的路径"""
     collection_info = get_collection(user, api_key)
     get_collection_id(collection_info)

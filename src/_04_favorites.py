@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
 import time
-from get_url import get_dir_path
+from common import get_dir_path
 import requests
 import myconfig
 
 """
-此文件是作为将收集到的url添加到自己的收藏中去,这里有点问题，发送的POST光看状态码没问题，其实直接定向到登录页去了
-此功能不想琢磨了，直接订阅别人的一样的
-可以手动获取token和cookie填到下面去，这样也可以实现
+此文件是作为将收集到的url添加到自己的收藏中去
 
 """
 
@@ -22,6 +20,7 @@ proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
 
 def fav_add_url():
     print("\n".join(get_dir_path()))
+    print("收藏前请确认好自己的收藏夹id、cookie、token是否填写正确")
     urlpath = input("请复制上述地址然后粘贴到下面进行收藏:\n")
     with open(urlpath, "r") as f:
         lines = f.readlines()

@@ -9,21 +9,24 @@ import requests
 import json
 from src import myconfig
 
+"""
+主要功能：通过访问api，获取搜索条件的元数据，然后遍历该页面的所有的图片地址，并将图片的地址全部保存到本地
+在此期间，会创建对应的文件夹，格式为：timestamp-condition_url.txt
+"""
+
 all_image_paths = []  # 创建空列表存储所有图片路径
-# 构造请求 URL
+# 存放构造的请求 URL
 init_path = []
 # 获取api_key
 api_key = myconfig.ConfigSingleton().api_key()
 proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
 level = myconfig.ConfigSingleton().set_level()
-print(level)
 
 
-def mkdir_init():
+def search_mkdir_init():
     """通过一个全局变量列表来装父路径，保证程序运行时只有一个时间戳路径，多次运行时存在多个时间戳路径"""
     file_path = os.path.abspath(__file__)
     dir_path = os.path.dirname(file_path)
-    print(dir_path)
     parent_dir_path = os.path.join(dir_path, "../Condition_Result")
     time_str = time.strftime("%Y%m%d_%H%M%S", time.localtime())
     new_dir_path = os.path.join(parent_dir_path, time_str)
@@ -55,7 +58,7 @@ def send_req(stars=100):  # 三个1分别代表了SFW、Sketchy、NSFW，如001�
             "1x1", "4x3", "5x4", "16x9", "16x10", "21x9", "32x9", "32x10", "48x9", "48x10"
         ]
         only_use_ratios = [
-             "16x9", "16x10", "21x9",  "9x16","9x18", "10x16"
+            "16x9", "16x10", "21x9", "9x16", "9x18", "10x16"
         ]
         """
         默认请求链接是100收藏数以上、等级自己设定，分辨率和屏幕比例是随机的
@@ -74,7 +77,7 @@ def send_req(stars=100):  # 三个1分别代表了SFW、Sketchy、NSFW，如001�
         file_path = cond_file_dir(match.group(1))
         print(url)
         try:
-            response = requests.request(method="GET", url=url, proxies=proxies )
+            response = requests.request(method="GET", url=url, proxies=proxies)
             data = json.loads(response.content)
             print(f"{(num + 1)}/{math.ceil(data['meta']['total'] / 24) + 1}")
             if not data['data']:
@@ -92,5 +95,5 @@ def send_req(stars=100):  # 三个1分别代表了SFW、Sketchy、NSFW，如001�
 
 
 if __name__ == '__main__':
-    mkdir_init()
+    search_mkdir_init()
     send_req()
