@@ -97,7 +97,7 @@ class CompareImageUrl:
 
 
 if __name__ == '__main__':
-    # 将子文件夹中的图片移动到总文件夹中去
+    # 将子文件夹中的图片移动到总文件夹中去同时删除空文件夹
     CompareImageUrl.move_pic_to_all_pictures()
     cin = CompareImageUrl()
     cin.before_download_checkurl()
