@@ -20,7 +20,7 @@ from src.basic import CompareImageUrl
 init_path = []
 _, cookies = myconfig.ConfigSingleton().get_mysession()
 proxies = myconfig.con_str_to_dict(myconfig.ConfigSingleton().get_proxy())
-
+headers = eval(myconfig.ConfigSingleton().get_headers())
 
 def down_mkdir_init():
     """通过一个全局变量列表来装父路径，保证程序运行时只有一个时间戳路径，多次运行时存在多个时间戳路径，所以每次运行本文件均会创建一个文件夹"""
@@ -81,21 +81,6 @@ def retry_download(url):
 
 def download_img(url):
     # 下载图片并保存到本地文件
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 '
-                      'Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,'
-                  'application/signed-exchange;v=b3;q=0.9',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Accept-Language': 'zh,en;q=0.9,zh-CN;q=0.8',
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'none',
-        'Sec-Fetch-User': '?1',
-        'Upgrade-Insecure-Requests': '1'
-    }
     response = requests.request(method="GET", url=url, headers=headers,stream=True, proxies=proxies)
     response.raise_for_status()  # 检查请求是否成功
     id = url.split("/")[-1].split(".")[0].replace("wallhaven-", "")

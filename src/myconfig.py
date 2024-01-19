@@ -50,7 +50,11 @@ class ConfigSingleton:
 
     def get_copy_cookies(self):
         return self.config.get("User", "copy_cookies")
+    def get_headers(self):
+        return self.config.get("User", "headers")
 
+    def get_copy_cookies(self):
+        return self.config.get("User", "copy_cookies")
 
     # 获取用户登录信息的session，但是在这个网页传递视乎存在问题，不清楚具体的验证规则，所以这个session无效
     def get_mysession(self):

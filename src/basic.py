@@ -34,7 +34,8 @@ class CompareImageUrl:
                     # if os.path.exists(my_pic):
                     #     os.replace(file_path, my_pic)
         for i in range(1, len(down_dirs)):
-            os.rmdir(down_dirs[i])
+            if '1_All_Pictures' not in down_dirs[i]:
+                os.rmdir(down_dirs[i])
 
     # 从总的图片文件夹中获取所有的图片的名称并放入一个列表，然后返回这个列表
     def extract_file_names(self):
