@@ -83,7 +83,7 @@ class CompareImageUrl:
                 filtered_urls.append(url)
         print(f'搜集到的url数量为：{len(all_urls)}')
         # print(all_urls)
-        print(f'过滤后的url数量为：{len(filtered_urls)}')
+        print(f'过滤后的不重复的url数量为：{len(filtered_urls)}')
         target_file = '../merged.txt'
         with open(target_file, 'w', encoding='utf-8') as f:
             f.write('\n'.join(filtered_urls))
